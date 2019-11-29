@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import com.sunzn.stream.library.*
+import com.sunzn.stream.library.StreamListener
+import com.sunzn.stream.library.StreamManager
 import com.sunzn.stream.library.bean.Data
 import com.sunzn.stream.library.bean.Stream
 import com.sunzn.stream.library.help.InstallHelper
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -29,10 +31,12 @@ class MainActivity : AppCompatActivity() {
             .setListener(object : StreamListener {
                 override fun onProgress(value: Data) {
                     Log.e("StreamManager", "下载进度：${value.curSize} | ${value.totSize} | ${value.status}")
+                    tv.text = String.format("下载进度：%d%%", value.curSize * 100L / value.totSize)
                 }
 
                 override fun onSuccess(bean: Stream) {
                     Log.e("StreamManager", "下载成功：$bean")
+                    tv.text = "下载成功"
 
                     // 7.0 系统不能在intent中包含file :///协议
                     val file = File(bean.localUri.replace("file://", ""))
