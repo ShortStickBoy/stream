@@ -1,5 +1,6 @@
 package com.sunzn.stream.library
 
+import android.Manifest
 import android.app.DownloadManager
 import android.content.*
 import android.database.ContentObserver
@@ -7,6 +8,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Environment
 import android.os.Handler
+import androidx.annotation.RequiresPermission
 import com.sunzn.stream.library.bean.Data
 import com.sunzn.stream.library.bean.Stream
 import com.sunzn.stream.library.vars.Value
@@ -61,6 +63,7 @@ object StreamManager {
         return this
     }
 
+    @RequiresPermission(value = Manifest.permission.WRITE_EXTERNAL_STORAGE)
     fun exec(context: Context) {
         this.context = context
 
